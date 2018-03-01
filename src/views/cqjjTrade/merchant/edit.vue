@@ -1,31 +1,13 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" label-width="100px">
-      <el-form-item label="用户名" >
-        <el-input v-model="form.username"></el-input>
+      <el-form-item label="商户名" >
+        <el-input v-model="form.merchantName"></el-input>
       </el-form-item>
-      <el-form-item label="密码" >
-        <el-input v-model="form.password"></el-input>
+      <el-form-item label="注册码" >
+        <el-input v-model="form.merchantCreditCode"></el-input>
       </el-form-item>
-      <el-form-item label="姓名" >
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
-      <el-form-item label="生日">
-        <el-date-picker v-model="form.birthday" class="wd-100" type="date" placeholder="请选择生日"></el-date-picker>
-      </el-form-item>
-      <el-form-item label="性别">
-        <el-radio-group v-model="form.gender">
-          <el-radio label="0">男</el-radio>
-          <el-radio label="1">女</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="电话" >
-        <el-input v-model="form.phone"></el-input>
-      </el-form-item>
-      <el-form-item label="电子邮箱" >
-        <el-input v-model="form.email"></el-input>
-      </el-form-item>
-      <el-form-item>
+      <el-form-item label="营业执照">
         <el-upload
           class="avatar-uploader"
           action="http://upload.qiniup.com"
@@ -34,10 +16,23 @@
           :on-error="handleAvatarError"
           :before-upload="beforeAvatarUpload"
           :data="postData">
-          <img v-if="form.headImg" :src="form.headImg" class="avatar">
+          <img v-if="form.merchantBusinessLicense" :src="form.merchantBusinessLicense" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
+      <el-form-item label="联系人" >
+        <el-input v-model="form.contact"></el-input>
+      </el-form-item>
+      <el-form-item label="联系电话" >
+        <el-input v-model="form.phone"></el-input>
+      </el-form-item>
+      <el-form-item label="邮箱" >
+        <el-input v-model="form.email"></el-input>
+      </el-form-item>
+      <el-form-item label="地址" >
+        <el-input v-model="form.address"></el-input>
+      </el-form-item>
+
 
       <el-form-item>
         <el-button type="primary" @click="submitForm">提交</el-button>
@@ -59,14 +54,13 @@
         routerID: this.$route.params.id,
         form: {
           id: '',
-          username: '',
-          password: '',
-          name: '',
-          gender: '',
-          birthday: '',
+          merchantName: '',
+          merchantCreditCode: '',
+          merchantBusinessLicense: '',
+          contact: '',
           phone: '',
           email: '',
-          headImg: ''
+          address: '',
         },
         postData: {
           token: '',
@@ -82,7 +76,7 @@
         alert(JSON.stringify(err))
       },
       handleAvatarSuccess(res, file) {
-        this.form.headImg = getQiniuHost() + res.key
+        this.form.merchantBusinessLicense = getQiniuHost() + res.key
       },
       beforeAvatarUpload(file) {
         return new Promise((resolve, reject) => {
@@ -105,26 +99,28 @@
       // 获取数据
       getData() {
         this.$store.dispatch('doGet', {
-          url: '/sysAdmin/user/get/' + this.routerID
+          url: '/cqjjTrade/merchant/get/' + this.routerID
         }).then((data) => {
           if (data != null) {
             this.isEdit = true
             this.form.id = data.id
-            this.form.username = data.username
-            this.form.password = data.password
-            this.form.name = data.name
-            this.form.gender = data.gender
-            this.form.birthday = data.birthday
+            this.form.merchantName = data.merchantName
+            this.form.merchantCreditCode = data.merchantCreditCode
+            this.form.merchantBusinessLicense = data.merchantBusinessLicense
+            this.form.contact = data.contact
             this.form.phone = data.phone
             this.form.email = data.email
-            this.form.headImg = data.headImg
+            this.form.address = data.address
           }
         })
       },
       // 提交表单
       submitForm() {
+        if(!this.isEdit){
+          this.form.merchantId = this.uuid()
+        }
         this.$store.dispatch('saveOrUpdate', {
-          url: '/sysAdmin/user/',
+          url: '/cqjjTrade/merchant/',
           isEdit: this.isEdit,
           data: this.form
         }).then((data) => {
@@ -134,6 +130,19 @@
           })
           this.back()
         })
+      },
+      uuid() {
+        var s = [];
+        var hexDigits = "0123456789";
+        for (var i = 0; i < 36; i++) {
+          s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+        }
+        s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+        s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+        s[8] = s[13] = s[18] = s[23] = "-";
+
+        var uuid = s.join("");
+        return uuid;
       },
       // 返回列表页
       back() {

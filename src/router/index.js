@@ -124,6 +124,37 @@ export const constantRouterMap = [
         ]
       }
     ]
+  },
+  {
+    path: '/cqjjTrade',
+    component: Layout,
+    children: [
+      {
+        path: 'merchant',
+        component: _import('cqjjTrade/merchant/index'),
+        redirect: '/cqjjTrade/merchant/init',
+        children: [
+          {
+            path: 'init',
+            component: _import('cqjjTrade/merchant/init'),
+            name: 'cqjjTradeMerchant',
+            meta: { title: '商户管理', isTag: true }
+          },
+          {
+            path: 'edit/:id',
+            component: _import('cqjjTrade/merchant/edit'),
+            name: 'cqjjTradeMerchant',
+            meta: { title: '商户编辑', isTag: false }
+          },
+          {
+            path: 'add',
+            component: _import('cqjjTrade/merchant/edit'),
+            name: 'cqjjTradeMerchant',
+            meta: { title: '商户新增', isTag: false }
+          }
+        ]
+      }
+    ]
   }
 ]
 
