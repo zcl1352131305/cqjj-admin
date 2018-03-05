@@ -153,6 +153,56 @@ export const constantRouterMap = [
             meta: { title: '商户新增', isTag: false }
           }
         ]
+      },
+      {
+        path: 'furnitureType',
+        component: _import('cqjjTrade/furnitureType/index'),
+        redirect: '/cqjjTrade/furnitureType/init',
+        children: [
+          {
+            path: 'init',
+            component: _import('cqjjTrade/furnitureType/init'),
+            name: 'cqjjTradeFurnitureType',
+            meta: { title: '家具类型管理', isTag: true }
+          },
+          {
+            path: 'edit/:id',
+            component: _import('cqjjTrade/furnitureType/edit'),
+            name: 'cqjjTradeFurnitureType',
+            meta: { title: '家具类型编辑', isTag: false }
+          },
+          {
+            path: 'add',
+            component: _import('cqjjTrade/furnitureType/edit'),
+            name: 'cqjjTradeFurnitureType',
+            meta: { title: '家具类型新增', isTag: false }
+          }
+        ]
+      },
+      {
+        path: 'wechatMenu',
+        component: _import('cqjjTrade/wechatMenu/index'),
+        redirect: '/cqjjTrade/wechatMenu/init',
+        children: [
+          {
+            path: 'init',
+            component: _import('cqjjTrade/wechatMenu/init'),
+            name: 'cqjjTradeWechatMenuType',
+            meta: { title: '家具类型管理', isTag: true }
+          },
+          {
+            path: 'edit/:id',
+            component: _import('cqjjTrade/wechatMenu/edit'),
+            name: 'cqjjTradeWechatMenuType',
+            meta: { title: '家具类型编辑', isTag: false }
+          },
+          {
+            path: 'add',
+            component: _import('cqjjTrade/wechatMenu/edit'),
+            name: 'cqjjTradeWechatMenuType',
+            meta: { title: '家具类型新增', isTag: false }
+          }
+        ]
       }
     ]
   }

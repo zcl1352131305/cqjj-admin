@@ -56,6 +56,13 @@ service.interceptors.response.use(
         duration: 5 * 1000
       })
       return Promise.reject('error')
+    } else if (res.code === 1 || res.code === '1') {
+      Message({
+        message: res.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
+      return Promise.reject('error')
     } else {
       return response.data
     }

@@ -176,7 +176,31 @@
         this.$store.dispatch('doGet', {
           url: '/sysAdmin/menu/tree'
         }).then((data) => {
+          console.log(JSON.stringify(data))
+          data.push({
+            "id": "-1",
+            "parentId": "-1",
+            "children": [],
+            "code": "home",
+            "name": "无需鉴权权限",
+            "path": "",
+            "href": null,
+            "icon": null,
+            "sort": 1
+          })
+          data.push({
+            "id": "-2",
+            "parentId": "-1",
+            "children": [],
+            "code": "home",
+            "name": "登录默认权限",
+            "path": "",
+            "href": null,
+            "icon": null,
+            "sort": 1
+          })
           this.treeData = data
+
         }).catch(() => {})
       },
       // 获取列表数据
@@ -214,17 +238,28 @@
       },
       // 树状后方操作
       renderContent(h, { node, data, store }) {
-        return (
-          <span style="flex: 1; display: flex; align-items: center; justify-content: space-between; font-size: 14px; padding-right: 8px;">
-          <span>
-          <span>{node.label}</span>
-        </span>
-        <span>
-        <el-button style="font-size: 12px;" type="text" on-click={ () => this.editData(data.id) }>编辑</el-button>
-        <el-button style="font-size: 12px;" type="text" on-click={ () => this.delData(data.id) }>删除</el-button>
-        </span>
-        </span>
-      )
+        if(data.id != -1 && data.id != -2){
+          return (
+            <span style="flex: 1; display: flex; align-items: center; justify-content: space-between; font-size: 14px; padding-right: 8px;">
+              <span>
+              <span>{node.label}</span>
+            </span>
+            <span>
+              <el-button style="font-size: 12px;" type="text" on-click={ () => this.editData(data.id) }>编辑</el-button>
+              <el-button style="font-size: 12px;" type="text" on-click={ () => this.delData(data.id) }>删除</el-button>
+            </span>
+            </span>
+          )
+        }
+        else{
+          return (
+            <span style="flex: 1; display: flex; align-items: center; justify-content: space-between; font-size: 14px; padding-right: 8px;">
+            <span>
+            <span>{node.label}</span>
+          </span>
+          </span>
+        )
+        }
       }
     }
   }
