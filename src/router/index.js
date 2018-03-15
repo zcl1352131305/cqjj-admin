@@ -180,6 +180,19 @@ export const constantRouterMap = [
         ]
       },
       {
+        path: 'furnitureRecycle',
+        component: _import('cqjjTrade/furnitureRecycle/index'),
+        redirect: '/cqjjTrade/furnitureRecycle/init',
+        children: [
+          {
+            path: 'init',
+            component: _import('cqjjTrade/furnitureRecycle/init'),
+            name: 'cqjjTradeFurnitureRecycle',
+            meta: { title: '回收发布管理', isTag: true }
+          }
+        ]
+      },
+      {
         path: 'wechatMenu',
         component: _import('cqjjTrade/wechatMenu/index'),
         redirect: '/cqjjTrade/wechatMenu/init',

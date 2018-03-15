@@ -27,6 +27,8 @@
 
 <script>
 
+  import md5 from 'js-md5';
+
 export default {
   name: 'login',
   data() {
@@ -46,7 +48,7 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
+        username: '18523977614',
         password: '111111'
       },
       loginRules: {
@@ -70,6 +72,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          this.loginForm.password = md5(this.loginForm.password)
           this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
             console.log('111111')
             this.loading = false
