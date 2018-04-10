@@ -5,6 +5,16 @@
         <el-form-item label="商户名">
           <el-input v-model="searchForm.merchantName" placeholder="商户名"></el-input>
         </el-form-item>
+        <el-form-item label="审核状态">
+          <el-select v-model="searchForm.auditState" placeholder="请选择">
+            <el-option
+              v-for="item in auditStateOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="getData">查询</el-button>
           <router-link :to="{ path: 'add' }" v-if="auths.indexOf('cqjjTradeMerchant:btn_add') != -1">
@@ -18,18 +28,22 @@
         <el-table-column type="selection"></el-table-column>
         <el-table-column prop="id" label="id"></el-table-column>
         <el-table-column prop="merchantName" label="商户名"></el-table-column>
+        <el-table-column prop="contact" label="联系人"></el-table-column>
+        <el-table-column prop="phone" label="联系电话"></el-table-column>
+        <el-table-column prop="address" label="联系地址"></el-table-column>
+        <el-table-column prop="auditStateName" label="审核状态"></el-table-column>
         <el-table-column label="操作" width="180">
           <template scope="props">
             <router-link :to="{path: 'edit/'+ props.row.id}" tag="span">
-              <el-button type="info" size="small" icon="edit"  v-if="auths.indexOf('cqjjTradeMerchant:btn_upd') != -1">修改</el-button>
+              <el-button type="primary" size="small" icon="edit"  v-if="auths.indexOf('cqjjTradeMerchant:btn_upd') != -1">审核</el-button>
             </router-link>
-            <el-button type="danger" size="small" icon="delete" @click="delData(props.row.id)" v-if="auths.indexOf('cqjjTradeMerchant:btn_del') != -1">删除</el-button>
+            <!--<el-button type="danger" size="small" icon="delete" @click="delData(props.row.id)" v-if="auths.indexOf('cqjjTradeMerchant:btn_del') != -1">删除</el-button>-->
           </template>
         </el-table-column>
       </el-table>
       <el-row class="mt-5">
         <el-col :span="24">
-          <el-button class="fl" type="danger" size="small" icon="delete" :disabled="batchSelect.length === 0" @click="batchDelData" v-if="auths.indexOf('cqjjTradeMerchant:btn_del') != -1">批量删除</el-button>
+          <!--<el-button class="fl" type="danger" size="small" icon="delete" :disabled="batchSelect.length === 0" @click="batchDelData" v-if="auths.indexOf('cqjjTradeMerchant:btn_del') != -1">批量删除</el-button>-->
           <el-pagination class="fr"  @current-change="handleCurrentChange" :current-page="pageNum" :page-size="pageSize" layout="total, prev, pager, next" :total="total"></el-pagination>
         </el-col>
       </el-row>
@@ -52,8 +66,19 @@
         total: 0, // 数据总条目
         batchSelect: [], //  批量选择
         searchForm: {
-          merchantName: ''
-        }
+          merchantName: '',
+          auditState: ''
+        },
+        auditStateOptions:[{
+          value: '1',
+          label: '待审核'
+        }, {
+          value: '2',
+          label: '审核成功'
+        }, {
+          value: '3',
+          label: '审核拒绝'
+        }],
       }
     },
     activated() {
@@ -80,6 +105,17 @@
           url: '/cqjjTrade/merchant/page',
           data: this.searchForm
         }).then((data) => {
+          data.list.forEach(function (obj) {
+            if(obj.auditState== '1'){
+              obj.auditStateName = '待审核'
+            }
+            else if(obj.auditState == '2'){
+              obj.auditStateName = '审核已拒绝';
+            }
+            else if(obj.auditState == '3'){
+              obj.auditStateName = '审核成功';
+            }
+          })
           this.tableData = data.list
           this.loading = false
           this.total = data.total

@@ -189,7 +189,32 @@ export const constantRouterMap = [
             component: _import('cqjjTrade/furnitureRecycle/init'),
             name: 'cqjjTradeFurnitureRecycle',
             meta: { title: '回收发布管理', isTag: true }
-          }
+          },
+          {
+            path: 'edit/:id',
+            component: _import('cqjjTrade/furnitureRecycle/edit'),
+            name: 'cqjjTradeFurnitureRecycle',
+            meta: { title: '回收发布详情', isTag: false }
+          },
+        ]
+      },
+      {
+        path: 'furnitureSale',
+        component: _import('cqjjTrade/furnitureSale/index'),
+        redirect: '/cqjjTrade/furnitureSale/init',
+        children: [
+          {
+            path: 'init',
+            component: _import('cqjjTrade/furnitureSale/init'),
+            name: 'cqjjTradeFurnitureSale',
+            meta: { title: '销售发布管理', isTag: true }
+          },
+          {
+            path: 'edit/:id',
+            component: _import('cqjjTrade/furnitureSale/edit'),
+            name: 'cqjjTradeFurnitureSale',
+            meta: { title: '销售发布详情', isTag: false }
+          },
         ]
       },
       {

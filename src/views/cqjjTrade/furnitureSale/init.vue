@@ -20,9 +20,8 @@
           </template>
         </el-table-column>
         <el-table-column prop="title" label="标题"></el-table-column>
-        <el-table-column prop="contact" label="联系人"></el-table-column>
-        <el-table-column prop="phone" label="电话号码"></el-table-column>
-        <el-table-column prop="address" label="地址"></el-table-column>
+        <el-table-column prop="fnName" label="家具名称"></el-table-column>
+        <el-table-column prop="price" label="价格"></el-table-column>
         <el-table-column label="操作" width="180">
           <template scope="props">
             <!--<router-link :to="{path: 'edit/'+ props.row.id}" tag="span">
@@ -82,7 +81,7 @@
       getData() {
         this.initPageInfo()
         this.$store.dispatch('doGet', {
-          url: '/cqjjTrade/furnitureRecycle/page',
+          url: '/cqjjTrade/furnitureSale/page',
           data: this.searchForm
         }).then((data) => {
           this.tableData = data.list
@@ -98,7 +97,7 @@
           type: 'warning'
         }).then(() => {
           this.$store.dispatch('doDelete', {
-            url: '/cqjjTrade/furnitureRecycle/remove/' + id
+            url: '/cqjjTrade/furnitureSale/remove/' + id
           }).then((data) => {
             this.$message({
               message: '删除成功',
@@ -116,7 +115,7 @@
         }).then(() => {
           const ids = this.batchSelect.map(item => item.id).toString()
           this.$store.dispatch('doDelete', {
-            url: '/cqjjTrade/furnitureRecycle/batchRemove/' + ids
+            url: '/cqjjTrade/furnitureSale/batchRemove/' + ids
           }).then((data) => {
             this.$message({
               message: '删除成功',
