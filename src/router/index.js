@@ -226,19 +226,44 @@ export const constantRouterMap = [
             path: 'init',
             component: _import('cqjjTrade/wechatMenu/init'),
             name: 'cqjjTradeWechatMenuType',
-            meta: { title: '家具类型管理', isTag: true }
+            meta: { title: '微信菜单管理', isTag: true }
           },
           {
             path: 'edit/:id',
             component: _import('cqjjTrade/wechatMenu/edit'),
             name: 'cqjjTradeWechatMenuType',
-            meta: { title: '家具类型编辑', isTag: false }
+            meta: { title: '微信菜单编辑', isTag: false }
           },
           {
             path: 'add',
             component: _import('cqjjTrade/wechatMenu/edit'),
             name: 'cqjjTradeWechatMenuType',
-            meta: { title: '家具类型新增', isTag: false }
+            meta: { title: '微信菜单新增', isTag: false }
+          }
+        ]
+      },
+      {
+        path: 'specialInfo',
+        component: _import('cqjjTrade/specialInfo/index'),
+        redirect: '/cqjjTrade/specialInfo/init',
+        children: [
+          {
+            path: 'init',
+            component: _import('cqjjTrade/specialInfo/init'),
+            name: 'cqjjTradeSpecialInfo',
+            meta: { title: '特殊信息管理', isTag: true }
+          },
+          {
+            path: 'edit/:id',
+            component: _import('cqjjTrade/specialInfo/edit'),
+            name: 'cqjjTradeSpecialInfo',
+            meta: { title: '特殊信息编辑', isTag: false }
+          },
+          {
+            path: 'add',
+            component: _import('cqjjTrade/specialInfo/edit'),
+            name: 'cqjjTradeSpecialInfo',
+            meta: { title: '特殊信息新增', isTag: false }
           }
         ]
       }

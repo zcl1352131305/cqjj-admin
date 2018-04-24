@@ -16,6 +16,15 @@
       <el-form-item label="排序" >
         <el-input v-model="form.sort"></el-input>
       </el-form-item>
+      <el-form-item label="是否显示" >
+        <el-switch
+          v-model="form.isShow"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          active-value="1"
+          inactive-value="0">
+        </el-switch>
+      </el-form-item>
 
       <el-form-item label="上级菜单" >
         <el-input v-model="form.parentName" readonly placeholder="不修改则不用填"></el-input>
@@ -54,7 +63,8 @@
           icon: '',
           sort: '',
           parentId: '',
-          parentName: ''
+          parentName: '',
+          isShow: ''
         },
         defaultProps: {
           children: 'children',
@@ -92,6 +102,7 @@
             this.form.icon = data.icon
             this.form.sort = data.sort
             this.form.parentId = data.parentId
+            this.form.isShow = data.isShow
           }
         })
       },
