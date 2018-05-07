@@ -266,6 +266,50 @@ export const constantRouterMap = [
             meta: { title: '特殊信息新增', isTag: false }
           }
         ]
+      },
+      {
+        path: 'market',
+        component: _import('cqjjTrade/market/index'),
+        redirect: '/cqjjTrade/market/init',
+        children: [
+          {
+            path: 'init',
+            component: _import('cqjjTrade/market/init'),
+            name: 'cqjjTradeMarket',
+            meta: { title: '市场管理', isTag: true }
+          },
+          {
+            path: 'edit/:id',
+            component: _import('cqjjTrade/market/edit'),
+            name: 'cqjjTradeMarket',
+            meta: { title: '市场编辑', isTag: false }
+          },
+          {
+            path: 'add',
+            component: _import('cqjjTrade/market/edit'),
+            name: 'cqjjTradeMarket',
+            meta: { title: '市场新增', isTag: false }
+          }
+        ]
+      },
+      {
+        path: 'advice',
+        component: _import('cqjjTrade/advice/index'),
+        redirect: '/cqjjTrade/advice/init',
+        children: [
+          {
+            path: 'init',
+            component: _import('cqjjTrade/advice/init'),
+            name: 'cqjjTradeAdvice',
+            meta: { title: '意见管理', isTag: true }
+          },
+          {
+            path: 'detail/:id',
+            component: _import('cqjjTrade/advice/detail'),
+            name: 'cqjjTradeAdvice',
+            meta: { title: '意见查看', isTag: false }
+          }
+        ]
       }
     ]
   }
